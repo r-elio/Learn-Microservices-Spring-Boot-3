@@ -9,4 +9,5 @@ import jakarta.validation.constraints.PositiveOrZero;
  * Attempt coming from the user
  */
 public record ChallengeAttemptDTO(@Min(1) @Max(99) int factorA, @Min(1) @Max(99) int factorB,
-                                  @NotBlank String userAlias, @PositiveOrZero int guess) { }
+                                  @NotBlank String userAlias, @PositiveOrZero int guess) {
+}

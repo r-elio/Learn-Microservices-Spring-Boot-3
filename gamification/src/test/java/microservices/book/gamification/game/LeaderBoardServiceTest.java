@@ -23,7 +23,7 @@ public class LeaderBoardServiceTest {
     private BadgeRepository badgeRepository;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         leaderBoardService = new LeaderBoardServiceImpl(scoreRepository, badgeRepository);
     }
 

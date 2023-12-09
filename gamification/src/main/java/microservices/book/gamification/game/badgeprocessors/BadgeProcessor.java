@@ -11,9 +11,9 @@ public interface BadgeProcessor {
     /**
      * Process some or all of the passed parameters and decides if the user is entitled to a badge.
      *
-     * @param currentScore current score of a user
+     * @param currentScore  current score of a user
      * @param scoreCardList list of score from a user
-     * @param solvedEvent a current solved challenge from a user
+     * @param solvedEvent   a current solved challenge from a user
      * @return a BadgeType if the user is entitled to this badge, otherwise empty
      */
     Optional<BadgeType> processForOptionalBadge(int currentScore, List<ScoreCard> scoreCardList, ChallengeSolvedEvent solvedEvent);
