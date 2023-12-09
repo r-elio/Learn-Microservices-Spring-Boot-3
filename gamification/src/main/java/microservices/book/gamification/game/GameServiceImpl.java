@@ -1,6 +1,6 @@
 package microservices.book.gamification.game;
 
-import microservices.book.gamification.challenge.ChallengeSolvedDTO;
+import microservices.book.gamification.challenge.ChallengeSolvedEvent;
 import microservices.book.gamification.game.badgeprocessors.BadgeProcessor;
 import microservices.book.gamification.game.domain.BadgeCard;
 import microservices.book.gamification.game.domain.BadgeType;
@@ -33,43 +33,43 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameResult newAttemptForUser(ChallengeSolvedDTO challenge) {
+    public GameResult newAttemptForUser(ChallengeSolvedEvent challenge) {
         // We give points only if it's correct
-        if (challenge.isCorrect()) {
-            ScoreCard scoreCard = new ScoreCard(challenge.getUserId(), challenge.getAttemptId());
+        if (challenge.correct()) {
+            ScoreCard scoreCard = new ScoreCard(challenge.userId(), challenge.attemptId());
             scoreRepository.save(scoreCard);
-            log.info("User {} scored {} points for attempt id {}", challenge.getUserAlias(), scoreCard.getScore(),
-                    challenge.getAttemptId());
+            log.info("User {} scored {} points for attempt id {}", challenge.userAlias(), scoreCard.getScore(),
+                    challenge.attemptId());
             List<BadgeCard> badgeCards = processForBadges(challenge);
             return new GameResult(scoreCard.getScore(),
                     badgeCards.stream().map(BadgeCard::getBadgeType).collect(Collectors.toList()));
         } else {
-            log.info("Attempt id {} is not correct. User {} does not get score", challenge.getAttemptId(),
-                    challenge.getUserAlias());
+            log.info("Attempt id {} is not correct. User {} does not get score", challenge.attemptId(),
+                    challenge.userAlias());
             return new GameResult(0, List.of());
         }
     }
 
     /**
-     * Checks the total score and the different score cards
+     * Checks the total score and the different scorecards
      * obtained to give new badges in case their conditions are met.
      */
-    private List<BadgeCard> processForBadges(final ChallengeSolvedDTO solvedChallenge) {
-        Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.getUserId());
+    private List<BadgeCard> processForBadges(final ChallengeSolvedEvent solvedChallenge) {
+        Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.userId());
         if (optTotalScore.isEmpty())
             return Collections.emptyList();
         int totalScore = optTotalScore.get();
         // Get the total score and existing badges for that user
         List<ScoreCard> scoreCardList = scoreRepository
-                .findByUserIdOrderByScoreTimestampDesc(solvedChallenge.getUserId());
+                .findByUserIdOrderByScoreTimestampDesc(solvedChallenge.userId());
         Set<BadgeType> alreadyGotBadges = badgeRepository
-                .findByUserIdOrderByBadgeTimestampDesc(solvedChallenge.getUserId()).stream()
+                .findByUserIdOrderByBadgeTimestampDesc(solvedChallenge.userId()).stream()
                 .map(BadgeCard::getBadgeType).collect(Collectors.toSet());
         // Calls the badge processors for badges that the user doesn't have yet
         List<BadgeCard> newBadgeCards = badgeProcessors.stream()
                 .filter(bp -> !alreadyGotBadges.contains(bp.badgeType()))
                 .map(bp -> bp.processForOptionalBadge(totalScore, scoreCardList, solvedChallenge))
-                .flatMap(Optional::stream).map(badgeType -> new BadgeCard(solvedChallenge.getUserId(), badgeType))
+                .flatMap(Optional::stream).map(badgeType -> new BadgeCard(solvedChallenge.userId(), badgeType))
                 .collect(Collectors.toList());
         badgeRepository.saveAll(newBadgeCards);
         return newBadgeCards;

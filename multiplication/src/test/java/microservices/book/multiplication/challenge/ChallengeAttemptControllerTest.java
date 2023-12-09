@@ -62,7 +62,7 @@ public class ChallengeAttemptControllerTest {
 
     @Test
     void getValidStatistics() throws Exception {
-        // given"
+        // given
         String alias = "john_doe";
         // when
         MockHttpServletResponse response = mvc.perform(get("/attempts").param("alias", alias)).andReturn().getResponse();

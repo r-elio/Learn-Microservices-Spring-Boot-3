@@ -1,6 +1,6 @@
 package microservices.book.gamification.game.badgeprocessors;
 
-import microservices.book.gamification.challenge.ChallengeSolvedDTO;
+import microservices.book.gamification.challenge.ChallengeSolvedEvent;
 import microservices.book.gamification.game.domain.BadgeType;
 import microservices.book.gamification.game.domain.ScoreCard;
 import org.springframework.stereotype.Component;
@@ -13,8 +13,8 @@ public class LuckyNumberBadgeProcessor implements BadgeProcessor {
 
     @Override
     public Optional<BadgeType> processForOptionalBadge(int currentScore, List<ScoreCard> scoreCardList,
-                                                       ChallengeSolvedDTO solvedDTO) {
-        return solvedDTO.getFactorA() == 42 || solvedDTO.getFactorB() == 42 ? Optional.of(BadgeType.LUCKY_NUMBER) : Optional.empty();
+                                                       ChallengeSolvedEvent solvedEvent) {
+        return solvedEvent.factorA() == 42 || solvedEvent.factorB() == 42 ? Optional.of(BadgeType.LUCKY_NUMBER) : Optional.empty();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package microservices.book.gamification.game;
 
-import microservices.book.gamification.challenge.ChallengeSolvedDTO;
+import microservices.book.gamification.challenge.ChallengeSolvedEvent;
 import microservices.book.gamification.game.GameService.GameResult;
 import microservices.book.gamification.game.badgeprocessors.BadgeProcessor;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,11 +36,11 @@ public class GameServiceTest {
     @Test
     public void checkIncorrectAttemptTest() {
         // given
-        ChallengeSolvedDTO attemptDTO = new ChallengeSolvedDTO(1L, false, 50, 60, 1L, "test");
+        ChallengeSolvedEvent attemptEvent = new ChallengeSolvedEvent(1L, false, 50, 60, 1L, "test");
         // when
-        GameResult resultAttempt = gameService.newAttemptForUser(attemptDTO);
+        GameResult resultAttempt = gameService.newAttemptForUser(attemptEvent);
         // then
-        then(resultAttempt.getScore()).isEqualTo(0);
-        then(resultAttempt.getBadges()).isEmpty();
+        then(resultAttempt.score()).isEqualTo(0);
+        then(resultAttempt.badges()).isEmpty();
     }
 }
