@@ -24,19 +24,16 @@ public class User {
         this.alias = alias;
     }
 
-    public User(final String userAlias) {
-        this(null, userAlias);
+    public User(final String alias) {
+        this.alias = alias;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(alias, user.alias);
+        return Objects.equals(id, user.id) && Objects.equals(alias, user.alias);
     }
 
     @Override
@@ -46,7 +43,10 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User(id=%s, alias=%s)", id, alias);
+        return "User{" +
+                "id=" + id +
+                ", alias='" + alias + '\'' +
+                '}';
     }
 
     public Long getId() {

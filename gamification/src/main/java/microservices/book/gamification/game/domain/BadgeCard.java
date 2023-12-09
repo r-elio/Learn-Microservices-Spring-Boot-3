@@ -31,10 +31,8 @@ public class BadgeCard {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         BadgeCard badgeCard = (BadgeCard) o;
         return Objects.equals(badgeId, badgeCard.badgeId) &&
                 Objects.equals(userId, badgeCard.userId) &&
@@ -48,8 +46,12 @@ public class BadgeCard {
 
     @Override
     public String toString() {
-        return String.format("BadgeCard(badgeId=%s, userId=%s, badgeTimestamp=%s, badgeType=%s)",
-                badgeId, userId, badgeTimestamp, badgeType);
+        return "BadgeCard{" +
+                "badgeId=" + badgeId +
+                ", userId=" + userId +
+                ", badgeTimestamp=" + badgeTimestamp +
+                ", badgeType=" + badgeType +
+                '}';
     }
 
     public Long getBadgeId() {

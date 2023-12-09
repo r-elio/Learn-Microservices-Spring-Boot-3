@@ -35,15 +35,13 @@ public class ScoreCard {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         ScoreCard scoreCard = (ScoreCard) o;
-        return Objects.equals(cardId, scoreCard.cardId) &&
+        return score == scoreCard.score &&
+                Objects.equals(cardId, scoreCard.cardId) &&
                 Objects.equals(userId, scoreCard.userId) &&
-                Objects.equals(attemptId, scoreCard.attemptId) &&
-                score == scoreCard.score;
+                Objects.equals(attemptId, scoreCard.attemptId);
     }
 
     @Override
@@ -53,8 +51,13 @@ public class ScoreCard {
 
     @Override
     public String toString() {
-        return String.format("ScoreCard(cardId=%s, userId=%s, attemptId=%s, scoreTimestamp=%s, score=%s)",
-                cardId, userId, attemptId, scoreTimestamp, score);
+        return "ScoreCard{" +
+                "cardId=" + cardId +
+                ", userId=" + userId +
+                ", attemptId=" + attemptId +
+                ", scoreTimestamp=" + scoreTimestamp +
+                ", score=" + score +
+                '}';
     }
 
     public Long getCardId() {

@@ -35,17 +35,15 @@ public class ChallengeAttempt {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-        ChallengeAttempt challengeAttempt = (ChallengeAttempt) o;
-        return Objects.equals(id, challengeAttempt.id) &&
-                Objects.equals(user, challengeAttempt.user) &&
-                factorA == challengeAttempt.factorA &&
-                factorB == challengeAttempt.factorB &&
-                guess == challengeAttempt.guess &&
-                correct == challengeAttempt.correct;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChallengeAttempt attempt = (ChallengeAttempt) o;
+        return factorA == attempt.factorA &&
+                factorB == attempt.factorB &&
+                guess == attempt.guess &&
+                correct == attempt.correct &&
+                Objects.equals(id, attempt.id) &&
+                Objects.equals(user, attempt.user);
     }
 
     @Override
@@ -55,8 +53,14 @@ public class ChallengeAttempt {
 
     @Override
     public String toString() {
-        return String.format("ChallengeAttempt(id=%s, user=%s, factorA=%s, factorB=%s, guess=%s, correct=%s)",
-                id, user, factorA, factorB, guess, correct);
+        return "ChallengeAttempt{" +
+                "id=" + id +
+                ", user=" + user +
+                ", factorA=" + factorA +
+                ", factorB=" + factorB +
+                ", guess=" + guess +
+                ", correct=" + correct +
+                '}';
     }
 
     public Long getId() {
