@@ -1,5 +1,6 @@
 package microservices.book.multiplication.challenge;
 
+import jakarta.transaction.Transactional;
 import microservices.book.multiplication.user.User;
 import microservices.book.multiplication.user.UserRepository;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         this.challengeEventPublisher = challengeEventPublisher;
     }
 
+    @Transactional
     @Override
     public ChallengeAttempt verifyAttempt(ChallengeAttemptDTO attemptDTO) {
         // check if the user already exists for that alias, otherwise create it

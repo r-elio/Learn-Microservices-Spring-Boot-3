@@ -19,7 +19,7 @@ public class AMQPConfiguration {
     }
 
     @Bean
-    public Queue gamificationQueue(@Value("$amqp.queue.gamification") final String queueName) {
+    public Queue gamificationQueue(@Value("${amqp.queue.gamification}") final String queueName) {
         return QueueBuilder.durable(queueName).build();
     }
 

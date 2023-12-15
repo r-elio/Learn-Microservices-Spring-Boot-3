@@ -1,5 +1,6 @@
 package microservices.book.gamification.game;
 
+import jakarta.transaction.Transactional;
 import microservices.book.gamification.challenge.ChallengeSolvedEvent;
 import microservices.book.gamification.game.badgeprocessors.BadgeProcessor;
 import microservices.book.gamification.game.domain.BadgeCard;
@@ -32,6 +33,7 @@ public class GameServiceImpl implements GameService {
         this.badgeProcessors = badgeProcessors;
     }
 
+    @Transactional
     @Override
     public GameResult newAttemptForUser(ChallengeSolvedEvent challenge) {
         // We give points only if it's correct
@@ -54,6 +56,7 @@ public class GameServiceImpl implements GameService {
      * Checks the total score and the different scorecards
      * obtained to give new badges in case their conditions are met.
      */
+    @Transactional
     private List<BadgeCard> processForBadges(final ChallengeSolvedEvent solvedChallenge) {
         Optional<Integer> optTotalScore = scoreRepository.getTotalScoreForUser(solvedChallenge.userId());
         if (optTotalScore.isEmpty())
