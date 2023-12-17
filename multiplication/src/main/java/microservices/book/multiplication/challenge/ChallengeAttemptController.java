@@ -24,7 +24,7 @@ public class ChallengeAttemptController {
 
     @PostMapping
     ResponseEntity<ChallengeAttempt> postResult(@RequestBody @Valid ChallengeAttemptDTO challengeAttemptDTO) {
-        log.info("challengeAttemptDTO: {}", challengeAttemptDTO);
+        log.info("Received new attempt from challengeAttemptDTO: {}", challengeAttemptDTO);
         return ResponseEntity.ok(challengeService.verifyAttempt(challengeAttemptDTO));
     }
 

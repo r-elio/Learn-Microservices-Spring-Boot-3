@@ -47,3 +47,4 @@ spring:
 logging:
   level:
     org.springframework.cloud.gateway.handler.predicate: trace
+    org.springframework.amqp.rabbit.connection.CachingConnectionFactory: WARN
