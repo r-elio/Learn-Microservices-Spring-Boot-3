@@ -3,12 +3,19 @@ server:
 spring:
   application:
     name: gateway
+  config:
+    import: 'consul:'
   cloud:
     loadbalancer:
       ribbon:
         # Not needed since we excluded the dependency, but still good to add it here for better readability
         enabled: false
     consul:
+      config: # Spring Boot Config Data Import
+        data-key: application.yml
+        prefix: config
+        format: yaml
+        default-context: defaults
       enabled: true
       discovery: # Get only services that are passing the health check
         query-passing: true
